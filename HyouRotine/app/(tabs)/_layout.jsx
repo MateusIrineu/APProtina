@@ -9,34 +9,42 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function TabsLayout() {
   return (
-    <Tabs
-    // screenOptions={} estilização
-    >
-
+    <Tabs>
       <Tabs.Screen
-        name="index"
-        options={{ title: 'Home', tabBarIcon: ({ color }) => (<Ionicons name="home" size={24} color="black" />)
-         }}
+        name="tarefas"
+        options={{
+          title: 'Tarefas',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="checkmark-done" size={size} color={color} />
+          ),
+        }}
       />
-
+      <Tabs.Screen
+        name="filtro"
+        options={{
+          title: 'Filtro',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="filter" size={size} color={color} />
+          ),
+        }}
+      />
       <Tabs.Screen
         name="perfil"
-        options={{ title: 'Perfil', tabBarIcon: ({ color }) => (<FontAwesome name="user" size={24} color="black" />)
-         }}
+        options={{
+          title: 'Perfil',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }}
       />
-
       <Tabs.Screen
-        name="configuracao"
-        options={{ title: 'Configuração', tabBarIcon: ({ color }) => (<Ionicons name="settings-sharp" size={24} color="black" />)
-         }}
+        name="configuracoes"
+        options={{
+          title: 'Configurações',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
+          ),
+        }}
       />
-
-      <Tabs.Screen
-        name="home"
-        options={{ title: 'Home', tabBarIcon: ({ color }) => (<Ionicons name="cellular" size={24} color="black" />)
-         }}
-      />
-
     </Tabs>
-  )
-}
+  );
