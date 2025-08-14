@@ -1,25 +1,23 @@
 import { View, Text, TextInput, Pressable, StyleSheet, Alert, FlatList, ImageBackground } from "react-native";
-// Componente de seleção em lista suspensa (dropdown), usado para escolher opções como categorias ou filtros 
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-import { BlurView } from "expo-blur"; // usado para dar um desfoque no card
+import { BlurView } from "expo-blur";
 import Task from "../../components/Task";
-
-const initialTasks = [];
+import { useTarefasStore } from "../../store/tasksStore"; // <-- Importa o store
 
 export default function ListaDeTarefas() {
-    const [tasks, setTasks] = useState(initialTasks);
     const [text, setNewTask] = useState("");
     const [category, setCategory] = useState("Alimentação");
     const [time, setTime] = useState("");
 
-    const remover = (id) => {
-        setTasks(tasks.filter((task) => task.id !== id));
-    };
+    // Zustand hooks
+    const tasks = useTarefasStore((state) => state.tasks);
+    const adicionarTarefa = useTarefasStore((state) => state.adicionarTarefa);
+    const removerTarefa = useTarefasStore((state) => state.removerTarefa);
+    const toggleCompleted = useTarefasStore((state) => state.toggleCompleted);
 
     const addTask = () => {
         if (text.trim() && time.trim()) {
-          //opções do picker
             const newTask = {
                 id: tasks.length + 1,
                 completed: false,
@@ -27,7 +25,7 @@ export default function ListaDeTarefas() {
                 category,
                 time
             };
-            setTasks([...tasks, newTask]);
+            adicionarTarefa(newTask);
             setNewTask("");
             setTime("");
             Alert.alert("Tarefa Adicionada", `Você adicionou: ${text}`);
@@ -36,22 +34,14 @@ export default function ListaDeTarefas() {
         }
     };
 
-    const toggleCompleted = (id) => {
-        setTasks(tasks.map((task) =>
-            task.id === id ? { ...task, completed: !task.completed } : task
-        ));
-    };
-
     return (
         <ImageBackground
             source={require("../../assets/image/imagemFundo.png")}
             style={style.background}
         >
-            {/* Blur por cima da imagem */}
             <BlurView intensity={40} tint="light" style={StyleSheet.absoluteFill} />
 
             <View style={style.mainContainer}>
-                {/* Formulário */}
                 <View style={style.cardContainer}>
                     <TextInput
                         style={style.input}
@@ -86,7 +76,6 @@ export default function ListaDeTarefas() {
                     </Pressable>
                 </View>
 
-                {/* Lista */}
                 <FlatList
                     style={{ width: "90%" }}
                     data={tasks}
@@ -96,7 +85,7 @@ export default function ListaDeTarefas() {
                             text={item.text}
                             completed={item.completed}
                             onToggle={() => toggleCompleted(item.id)}
-                            onDelete={() => remover(item.id)}
+                            onDelete={() => removerTarefa(item.id)}
                             category={item.category}
                             time={item.time}
                         />

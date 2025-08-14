@@ -1,28 +1,15 @@
-import { View, Text, StyleSheet, Button, FlatList, ImageBackground, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ImageBackground, Pressable } from 'react-native';
 import { useState } from "react";
 import Task from "../../components/Task";
-
-const initialTasks = [
-    { id: 1, completed: true, text: "Estudar React Native" },
-    { id: 2, completed: false, text: "Fazer exercícios" },
-    { id: 3, completed: true, text: "Ler documentação" },
-];
+import { useTarefasStore } from "../../store/tasksStore"; // ajuste o caminho se necessário
 
 export default function Filtro() {
     const [filtro, setFiltro] = useState('todas');
-    const [tasks, setTasks] = useState(initialTasks);
 
-    const remover = (id) => {
-        setTasks(tasks.filter((task) => task.id !== id));
-    };
-
-    const toggleCompleted = (id) => {
-        setTasks(
-            tasks.map((task) =>
-                task.id === id ? { ...task, completed: !task.completed } : task
-            )
-        );
-    };
+    // Zustand hooks
+    const tasks = useTarefasStore((state) => state.tasks);
+    const removerTarefa = useTarefasStore((state) => state.removerTarefa);
+    const toggleCompleted = useTarefasStore((state) => state.toggleCompleted);
 
     const filteredTasks = tasks.filter((task) => {
         if (filtro === 'todas') return true;
@@ -55,7 +42,9 @@ export default function Filtro() {
                         text={item.text}
                         completed={item.completed}
                         onToggle={() => toggleCompleted(item.id)}
-                        onDelete={() => remover(item.id)}
+                        onDelete={() => removerTarefa(item.id)}
+                        category={item.category}
+                        time={item.time}
                     />
                 )}
                 style={{ width: '100%' }}
