@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+// instalar e importa para usar o gradiente
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet } from "react-native";
 

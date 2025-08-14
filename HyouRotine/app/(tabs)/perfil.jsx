@@ -20,7 +20,7 @@ export default function ProfileScreen() {
 
       {/* Lista de opções */}
       <View style={styles.menuContainer}>
-        {["Edit Profile", "Progress", "Preferences", "Privacy", "Sign Out"].map((item, index) => (
+        {["Editar Perfil", "Progresso", "Preferências", "Privacidade", "Sair"].map((item, index) => (
           <TouchableOpacity key={index} style={styles.menuItem}>
             <Text style={styles.menuText}>{item}</Text>
           </TouchableOpacity>

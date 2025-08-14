@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
-import { useState } from "react"
+import { View, Text, StyleSheet, Button, FlatList, ImageBackground, Pressable } from 'react-native';
+import { useState } from "react";
 import Task from "../../components/Task";
 
 const initialTasks = [
@@ -15,6 +15,7 @@ export default function Filtro() {
     const remover = (id) => {
         setTasks(tasks.filter((task) => task.id !== id));
     };
+
     const toggleCompleted = (id) => {
         setTasks(
             tasks.map((task) =>
@@ -30,14 +31,22 @@ export default function Filtro() {
     });
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.nome}>Pagina de Filtro</Text>
+        <ImageBackground
+            source={require("../../assets/image/imagemFundo.png")}
+            style={styles.container}
+        >
             <View style={styles.botoes}>
-                <Button title="Todas" onPress={() => setFiltro('todas')} />
-                <Button title="Concluídas" onPress={() => setFiltro('concluidas')} />
-                <Button title="Pendentes" onPress={() => setFiltro('pendentes')} />
+                <Pressable style={styles.botao} onPress={() => setFiltro('todas')}>
+                    <Text style={styles.botaoTexto}>Todas</Text>
+                </Pressable>
+                <Pressable style={styles.botao} onPress={() => setFiltro('concluidas')}>
+                    <Text style={styles.botaoTexto}>Concluídas</Text>
+                </Pressable>
+                <Pressable style={styles.botao} onPress={() => setFiltro('pendentes')}>
+                    <Text style={styles.botaoTexto}>Pendentes</Text>
+                </Pressable>
             </View>
-            <Text style={styles.filtroSelecionado}>Filtro selecionado: {filtro}</Text>
+
             <FlatList
                 data={filteredTasks}
                 keyExtractor={(item) => item.id.toString()}
@@ -51,29 +60,31 @@ export default function Filtro() {
                 )}
                 style={{ width: '100%' }}
             />
-        </View>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        resizeMode: "cover",
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#fff',
-    },
-    nome: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginBottom: 8,
+        paddingTop: 40
     },
     botoes: {
         flexDirection: 'row',
         gap: 10,
         marginVertical: 20,
     },
-    filtroSelecionado: {
-        fontSize: 16,
-        marginTop: 10,
+    botao: {
+        backgroundColor: '#000',
+        paddingVertical: 10,
+        paddingHorizontal: 14,
+        borderRadius: 8
     },
+    botaoTexto: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold'
+    }
 });
