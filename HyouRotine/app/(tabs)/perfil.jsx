@@ -1,93 +1,71 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import { useState } from "react";
-import Feather from "@expo/vector-icons/Feather";
+import React from "react";
+import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 
-export default function Perfil() {
-  const [nome, setNome] = useState("Nome de Usuario");
-  const [editando, setEditando] = useState(false);
-  const [novoNome, setNovoNome] = useState(nome);
-
-  const salvarNome = () => {
-    setNome(novoNome);
-    setEditando(false);
-  };
-
+export default function ProfileScreen() {
   return (
-    <View style={styles.container}>
-      <Image
-        source={{
-          uri: "https://i.pinimg.com/736x/4d/c7/06/4dc7064a3b22da9362e2ca334610fb8c.jpg",
-        }}
-        style={styles.avatar}
-      />
-      {editando ? (
-        <View style={{ alignItems: "center" }}>
-          <TextInput
-            style={styles.input}
-            value={novoNome}
-            onChangeText={setNovoNome}
-            placeholder="Digite Aqui!!"
+    <ScrollView style={{ flex: 1, backgroundColor: "#DC385A" }}>
+      {/* Parte de cima com imagem de fundo */}
+      <ImageBackground
+        source={{ uri: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" }} // imagem de fundo
+        style={styles.header}
+      >
+        <View style={styles.profileImageWrapper}>
+          <Image
+            source={{ uri: "https://randomuser.me/api/portraits/women/44.jpg" }} // foto do perfil
+            style={styles.profileImage}
           />
-          <TouchableOpacity style={styles.botao} onPress={salvarNome}>
-            <Text style={{ color: "#fff" }}>Salvar</Text>
-          </TouchableOpacity>
         </View>
-      ) : (
-        <View style={styles.containerNome}>
-          <Text style={styles.nome}>{nome}</Text>
-          <TouchableOpacity onPress={() => setEditando(true)}>
-            <Text style={{ marginLeft: 10 }}>
-              <Feather name="edit-2" size={24} color="black" />
-            </Text>
+        <Text style={styles.name}>Yoshiko Namika</Text>
+      </ImageBackground>
+
+      {/* Lista de opções */}
+      <View style={styles.menuContainer}>
+        {["Edit Profile", "Progress", "Preferences", "Privacy", "Sign Out"].map((item, index) => (
+          <TouchableOpacity key={index} style={styles.menuItem}>
+            <Text style={styles.menuText}>{item}</Text>
           </TouchableOpacity>
-        </View>
-      )}
-    </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  header: {
+    height: 250,
+    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
   },
-  containerNome: {
-    flex: 1,
-    flexDirection: "row",
-  },
-  avatar: {
-    marginTop: 30,
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 20,
-  },
-  nome: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 8,
-    width: 180,
+  profileImageWrapper: {
+    borderWidth: 4,
+    borderColor: "#DC385A",
+    borderRadius: 100,
+    padding: 4,
     marginBottom: 10,
-    textAlign: "center",
   },
-  botao: {
-    backgroundColor: "black",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+  },
+  name: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  menuContainer: {
+    backgroundColor: "#DC385A",
+    paddingVertical: 20,
+    alignItems: "center",
+  },
+  menuItem: {
+    paddingVertical: 20,
+    width: "100%",
+    alignItems: "center",
+  },
+  menuText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });

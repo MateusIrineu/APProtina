@@ -51,6 +51,9 @@ export default function ListaDeTarefas() {
             <Text style={style.buttonText}>Adicionar</Text>
           </Pressable>
 
+
+        </View>
+        <View>
           <FlatList
             style={style.taskList}
             data={tasks}
@@ -115,10 +118,11 @@ const style = StyleSheet.create({
   taskList: {
     backgroundColor: "rgba(255,255,255,0.7)",
     borderRadius: 6,
-    padding: 40,
+    padding: 30,
     borderWidth: 2,
     borderColor: "#000",
-    marginBottom: 5
+    marginBottom: 5,
+    
   },
   taskName: {
     color: '#fff'
