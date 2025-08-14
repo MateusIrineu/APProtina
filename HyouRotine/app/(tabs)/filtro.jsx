@@ -1,27 +1,11 @@
 import { View, Text, StyleSheet, Button, FlatList } from 'react-native';
-import { useState } from "react"
+import { useState } from "react";
 import Task from "../../components/Task";
-
-const initialTasks = [
-    { id: 1, completed: true, text: "Estudar React Native" },
-    { id: 2, completed: false, text: "Fazer exercícios" },
-    { id: 3, completed: true, text: "Ler documentação" },
-];
+import { useTasksStore } from '../../store/tasksStore';
 
 export default function Filtro() {
     const [filtro, setFiltro] = useState('todas');
-    const [tasks, setTasks] = useState(initialTasks);
-
-    const remover = (id) => {
-        setTasks(tasks.filter((task) => task.id !== id));
-    };
-    const toggleCompleted = (id) => {
-        setTasks(
-            tasks.map((task) =>
-                task.id === id ? { ...task, completed: !task.completed } : task
-            )
-        );
-    };
+    const { tasks, removeTask, toggleCompleted } = useTasksStore();
 
     const filteredTasks = tasks.filter((task) => {
         if (filtro === 'todas') return true;
@@ -46,7 +30,7 @@ export default function Filtro() {
                         text={item.text}
                         completed={item.completed}
                         onToggle={() => toggleCompleted(item.id)}
-                        onDelete={() => remover(item.id)}
+                        onDelete={() => removeTask(item.id)}
                     />
                 )}
                 style={{ width: '100%' }}

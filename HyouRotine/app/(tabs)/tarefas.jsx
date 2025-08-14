@@ -9,38 +9,19 @@ import {
 } from "react-native";
 import { useState } from "react";
 import Task from "../../components/Task";
+import { useTasksStore } from '../../store/tasksStore';
 
-const initialTasks = [{ id: 1, completed: true, text: "Estudar React Native" }];
 
 export default function ListaDeTarefas() {
-  const [tasks, setTasks] = useState(initialTasks);
+  const { tasks, addTask, removeTask, toggleCompleted } = useTasksStore();
   const [text, setNewTask] = useState("");
 
-  const remover = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
-
-  const addTask = () => {
+  const handleAddTask = () => {
     if (text.trim()) {
-      const newTask = {
-        id: tasks.length + 1,
-        completed: false,
-        text,
-      };
-
-      setTasks([...tasks, newTask]);
+      addTask(text);
       setNewTask("");
       Alert.alert("Tarefa Adicionada", `Você adicionou: ${text}`);
     }
-  };
-
-  // Função para marcar/desmarcar tarefa
-  const toggleCompleted = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
   };
 
   return (
@@ -59,7 +40,7 @@ export default function ListaDeTarefas() {
         />
 
         <Pressable
-          onPress={addTask}
+          onPress={handleAddTask}
           style={({ pressed }) => [
             style.Pressionar,
             {
