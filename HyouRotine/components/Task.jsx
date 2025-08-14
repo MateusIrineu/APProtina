@@ -6,18 +6,18 @@ export default function Task({ text, completed, onToggle, onDelete }) {
     const renderRightActions = () => (
         <Pressable onPress={onDelete} style={styles.deleteSwipeBtn}>
             <Ionicons name="trash" size={24} color="#fff" />
-            <Text>Deletar</Text>
+            <Text style={styles.colorDelete}>Deletar</Text>
         </Pressable>
     );
 
     return (
         <Swipeable renderRightActions={renderRightActions}>
             <View style={styles.rowContainer}>
-                <Pressable onPress={onToggle}>
-                    <Ionicons name="checkmark-circle" size={32} color={completed ? 'green' : 'red'} />
+                <Pressable style={styles.deleteBtn} onPress={onToggle}>
+                    <Ionicons name="checkmark-circle" size={20} color={completed ? 'green' : 'red'} />
                 </Pressable>
 
-                <Text style={[{ flex: 1 }, completed ]}>
+                <Text style={[{ flex: 1}, completed ]}>
                     {text}
                 </Text>
 
@@ -35,10 +35,15 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     deleteBtn: {
-        padding: 6,
+        padding: 15,
         borderRadius: 8,
+
+    },
+    colorDelete:{
+        color: 'white'
     },
     deleteSwipeBtn: {
+        // padding: 10,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#e53935',

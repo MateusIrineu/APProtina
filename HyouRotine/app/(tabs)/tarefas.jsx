@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  StyleSheet,
-  Alert,
-  FlatList,
-} from "react-native";
+import { View, Text, TextInput, Pressable, StyleSheet, Alert, FlatList, ImageBackground } from "react-native";
 import { useState } from "react";
 import Task from "../../components/Task";
 
@@ -22,176 +14,113 @@ export default function ListaDeTarefas() {
 
   const addTask = () => {
     if (text.trim()) {
-      const newTask = {
-        id: tasks.length + 1,
-        completed: false,
-        text,
-      };
-
+      const newTask = { id: tasks.length + 1, completed: false, text };
       setTasks([...tasks, newTask]);
       setNewTask("");
       Alert.alert("Tarefa Adicionada", `Você adicionou: ${text}`);
     }
   };
 
-  // Função para marcar/desmarcar tarefa
   const toggleCompleted = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
+    setTasks(tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    ));
   };
 
   return (
-    <View style={style.mainContainer}>
-      <View style={style.flexContainer}>
-        <Text style={style.tituloText}> Minhas Tarefas </Text>
+    <ImageBackground
+      source={require("../../assets/image/imagemFundo.png")} // sua imagem de fundo
+      style={style.background}
+    >
+      <View style={style.mainContainer}>
+
+
+        <View style={style.cardContainer}>
+          <TextInput
+            style={style.input}
+            placeholder="Digite a tarefa"
+            placeholderTextColor="#999"
+            onChangeText={setNewTask}
+            value={text}
+          />
+
+          <Pressable onPress={addTask} style={({ pressed }) => [
+            style.button,
+            { backgroundColor: pressed ? "#222" : "#000" }
+          ]}>
+            <Text style={style.buttonText}>Adicionar</Text>
+          </Pressable>
+
+          <FlatList
+            style={style.taskList}
+            data={tasks}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Task style={style.taskName}
+                text={item.text}
+                completed={item.completed}
+                onToggle={() => toggleCompleted(item.id)}
+                onDelete={() => remover(item.id)}
+              />
+            )}
+          />
+        </View>
+        <View>
+          
+        </View>
       </View>
-
-      <View style={style.containerInput}>
-        <TextInput
-          style={style.estiloInput}
-          placeholder="Adicionar Tarefa"
-          placeholderTextColor={"white"}
-          onChangeText={setNewTask}
-          value={text}
-        />
-
-        <Pressable
-          onPress={addTask}
-          style={({ pressed }) => [
-            style.Pressionar,
-            {
-              backgroundColor: pressed ? "green" : "white",
-            },
-          ]}
-        >
-          {({ pressed }) => (
-            <Text
-              style={[
-                style.textInput,
-                {
-                  color: pressed ? "#40B7AD" : "black",
-                  fontWeight: pressed ? "bold" : "500",
-                },
-              ]}
-            >
-              {" "}
-              Adicionar{" "}
-            </Text>
-          )}
-        </Pressable>
-
-        <FlatList
-          style={style.listaAtividades}
-          data={tasks}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <Task
-              text={item.text}
-              completed={item.completed}
-              onToggle={() => toggleCompleted(item.id)}
-              onDelete={() => remover(item.id)}
-            />
-          )}
-        />
-      </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const style = StyleSheet.create({
-  mainContainer: {
-    marginTop: 50,
-    marginHorizontal: 15,
-    backgroundColor: "#F7F9FA",
+  background: {
     flex: 1,
+    resizeMode: "cover",
   },
-
-  containerInput: {
-    backgroundColor: "#40B7AD",
-    marginTop: 15,
-    borderRadius: 16,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-
-  estiloInput: {
-    marginVertical: 20,
-    borderWidth: 0,
-    borderRadius: 10,
-    padding: 12,
-    color: "#333",
-    backgroundColor: "#fff",
-    fontSize: 16,
-  },
-
-  flexContainer: {
+  mainContainer: {
+    marginTop: 80,
+    marginHorizontal: 10,
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    gap: 5,
-    backgroundColor: "#40B7AD",
-    padding: 16,
+  },
+  cardContainer: {
+    backgroundColor: "rgba(255,255,255,0.7)",
+    borderWidth: 2,
+    borderColor: "#FF3761",
     borderRadius: 16,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    padding: 30,
+    width: "90%",
   },
-
-  imageStyle: {
-    width: 60,
-    height: 60,
-    borderRadius: 12,
-    marginBottom: 8,
-  },
-
-  tituloText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 24,
-    marginBottom: 4,
-    letterSpacing: 1,
-  },
-
-  Pressionar: {
-    backgroundColor: "#4CD9CD",
-    borderRadius: 50,
+  input: {
+    backgroundColor: "#fff",
     padding: 12,
+    borderRadius: 6,
+    fontSize: 12,
+    marginBottom: 15,
+    borderWidth: 1
+  },
+  button: {
+    backgroundColor: "#000",
+    padding: 12,
+    borderRadius: 10,
     alignItems: "center",
     marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
   },
-
-  textInput: {
+  buttonText: {
     color: "#fff",
-    fontWeight: "bold",
-    fontSize: 18,
-    letterSpacing: 1,
+    // fontWeight: "bold",
+    fontSize: 14,
   },
-
-  listaAtividades: {
-    borderRadius: 16,
-    width: "auto",
-    backgroundColor: "#fff",
-    padding: 15,
-    marginBottom: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
+  taskList: {
+    backgroundColor: "rgba(255,255,255,0.7)",
+    borderRadius: 6,
+    padding: 40,
+    borderWidth: 2,
+    borderColor: "#000",
+    marginBottom: 5
   },
+  taskName: {
+    color: '#fff'
+  }
 });
