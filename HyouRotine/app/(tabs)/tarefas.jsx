@@ -2,7 +2,7 @@ import { View, Text, TextInput, Pressable, StyleSheet, Alert, FlatList, ImageBac
 // Componente de seleção em lista suspensa (dropdown), usado para escolher opções como categorias ou filtros 
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-import { BlurView } from "expo-blur"; // Import do BlurView
+import { BlurView } from "expo-blur"; // usado para dar um desfoque no card
 import Task from "../../components/Task";
 
 const initialTasks = [];
