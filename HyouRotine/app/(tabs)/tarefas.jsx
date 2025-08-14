@@ -73,7 +73,7 @@ export default function ListaDeTarefas() {
               text={item.text}
               completed={item.completed}
               onToggle={() => toggleCompleted(item.id)}
-              onDelete={() => remover(item.id)}
+              onDelete={() => removeTask(item.id)}
             />
           )}
         />
