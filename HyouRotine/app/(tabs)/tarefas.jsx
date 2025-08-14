@@ -19,6 +19,7 @@ export default function ListaDeTarefas() {
 
     const addTask = () => {
         if (text.trim() && time.trim()) {
+          //opções do picker
             const newTask = {
                 id: tasks.length + 1,
                 completed: false,
