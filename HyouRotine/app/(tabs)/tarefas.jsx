@@ -1,197 +1,152 @@
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  StyleSheet,
-  Alert,
-  FlatList,
-} from "react-native";
+import { View, Text, TextInput, Pressable, StyleSheet, Alert, FlatList, ImageBackground } from "react-native";
+// Componente de seleção em lista suspensa (dropdown), usado para escolher opções como categorias ou filtros 
+import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+import { BlurView } from "expo-blur"; // usado para dar um desfoque no card
 import Task from "../../components/Task";
 
-const initialTasks = [{ id: 1, completed: true, text: "Estudar React Native" }];
+const initialTasks = [];
 
 export default function ListaDeTarefas() {
-  const [tasks, setTasks] = useState(initialTasks);
-  const [text, setNewTask] = useState("");
+    const [tasks, setTasks] = useState(initialTasks);
+    const [text, setNewTask] = useState("");
+    const [category, setCategory] = useState("Alimentação");
+    const [time, setTime] = useState("");
 
-  const remover = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
+    const remover = (id) => {
+        setTasks(tasks.filter((task) => task.id !== id));
+    };
 
-  const addTask = () => {
-    if (text.trim()) {
-      const newTask = {
-        id: tasks.length + 1,
-        completed: false,
-        text,
-      };
+    const addTask = () => {
+        if (text.trim() && time.trim()) {
+          //opções do picker
+            const newTask = {
+                id: tasks.length + 1,
+                completed: false,
+                text,
+                category,
+                time
+            };
+            setTasks([...tasks, newTask]);
+            setNewTask("");
+            setTime("");
+            Alert.alert("Tarefa Adicionada", `Você adicionou: ${text}`);
+        } else {
+            Alert.alert("Erro", "Digite a tarefa e o horário!");
+        }
+    };
 
-      setTasks([...tasks, newTask]);
-      setNewTask("");
-      Alert.alert("Tarefa Adicionada", `Você adicionou: ${text}`);
-    }
-  };
+    const toggleCompleted = (id) => {
+        setTasks(tasks.map((task) =>
+            task.id === id ? { ...task, completed: !task.completed } : task
+        ));
+    };
 
-  // Função para marcar/desmarcar tarefa
-  const toggleCompleted = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
-
-  return (
-    <View style={style.mainContainer}>
-      <View style={style.flexContainer}>
-        <Text style={style.tituloText}> Minhas Tarefas </Text>
-      </View>
-
-      <View style={style.containerInput}>
-        <TextInput
-          style={style.estiloInput}
-          placeholder="Adicionar Tarefa"
-          placeholderTextColor={"white"}
-          onChangeText={setNewTask}
-          value={text}
-        />
-
-        <Pressable
-          onPress={addTask}
-          style={({ pressed }) => [
-            style.Pressionar,
-            {
-              backgroundColor: pressed ? "green" : "white",
-            },
-          ]}
+    return (
+        <ImageBackground
+            source={require("../../assets/image/imagemFundo.png")}
+            style={style.background}
         >
-          {({ pressed }) => (
-            <Text
-              style={[
-                style.textInput,
-                {
-                  color: pressed ? "#40B7AD" : "black",
-                  fontWeight: pressed ? "bold" : "500",
-                },
-              ]}
-            >
-              {" "}
-              Adicionar{" "}
-            </Text>
-          )}
-        </Pressable>
+            {/* Blur por cima da imagem */}
+            <BlurView intensity={40} tint="light" style={StyleSheet.absoluteFill} />
 
-        <FlatList
-          style={style.listaAtividades}
-          data={tasks}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <Task
-              text={item.text}
-              completed={item.completed}
-              onToggle={() => toggleCompleted(item.id)}
-              onDelete={() => remover(item.id)}
-            />
-          )}
-        />
-      </View>
-    </View>
-  );
+            <View style={style.mainContainer}>
+                {/* Formulário */}
+                <View style={style.cardContainer}>
+                    <TextInput
+                        style={style.input}
+                        placeholder="Digite a tarefa"
+                        placeholderTextColor="#999"
+                        onChangeText={setNewTask}
+                        value={text}
+                    />
+
+                    <Picker
+                        selectedValue={category}
+                        onValueChange={(itemValue) => setCategory(itemValue)}
+                        style={style.picker}
+                    >
+                        <Picker.Item label="Alimentação" value="Alimentação" />
+                        <Picker.Item label="Lazer" value="Lazer" />
+                        <Picker.Item label="Exercício" value="Exercício" />
+                        <Picker.Item label="Estudo" value="Estudo" />
+                        <Picker.Item label="Trabalho" value="Trabalho" />
+                    </Picker>
+
+                    <TextInput
+                        style={style.input}
+                        placeholder="Horário (ex: 22:00 às 22:30)"
+                        placeholderTextColor="#999"
+                        onChangeText={setTime}
+                        value={time}
+                    />
+
+                    <Pressable onPress={addTask} style={style.button}>
+                        <Text style={style.buttonText}>Adicionar</Text>
+                    </Pressable>
+                </View>
+
+                {/* Lista */}
+                <FlatList
+                    style={{ width: "90%" }}
+                    data={tasks}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => (
+                        <Task
+                            text={item.text}
+                            completed={item.completed}
+                            onToggle={() => toggleCompleted(item.id)}
+                            onDelete={() => remover(item.id)}
+                            category={item.category}
+                            time={item.time}
+                        />
+                    )}
+                />
+            </View>
+        </ImageBackground>
+    );
 }
 
 const style = StyleSheet.create({
-  mainContainer: {
-    marginTop: 50,
-    marginHorizontal: 15,
-    backgroundColor: "#F7F9FA",
-    flex: 1,
-  },
-
-  containerInput: {
-    backgroundColor: "#40B7AD",
-    marginTop: 15,
-    borderRadius: 16,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-
-  estiloInput: {
-    marginVertical: 20,
-    borderWidth: 0,
-    borderRadius: 10,
-    padding: 12,
-    color: "#333",
-    backgroundColor: "#fff",
-    fontSize: 16,
-  },
-
-  flexContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 5,
-    backgroundColor: "#40B7AD",
-    padding: 16,
-    borderRadius: 16,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-
-  imageStyle: {
-    width: 60,
-    height: 60,
-    borderRadius: 12,
-    marginBottom: 8,
-  },
-
-  tituloText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 24,
-    marginBottom: 4,
-    letterSpacing: 1,
-  },
-
-  Pressionar: {
-    backgroundColor: "#4CD9CD",
-    borderRadius: 50,
-    padding: 12,
-    alignItems: "center",
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-
-  textInput: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 18,
-    letterSpacing: 1,
-  },
-
-  listaAtividades: {
-    borderRadius: 16,
-    width: "auto",
-    backgroundColor: "#fff",
-    padding: 15,
-    marginBottom: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
-  },
+    background: {
+        flex: 1,
+        resizeMode: "cover"
+    },
+    mainContainer: {
+        marginTop: 80,
+        flex: 1,
+        alignItems: "center"
+    },
+    cardContainer: {
+        backgroundColor: "rgba(255,255,255,0.7)",
+        borderWidth: 2,
+        borderColor: "#000",
+        borderRadius: 16,
+        padding: 20,
+        width: "90%",
+        marginBottom: 20
+    },
+    input: {
+        backgroundColor: "#fff",
+        padding: 12,
+        borderRadius: 6,
+        fontSize: 14,
+        marginBottom: 12,
+        borderWidth: 1
+    },
+    picker: {
+        backgroundColor: "#fff",
+        borderRadius: 6,
+        marginBottom: 12
+    },
+    button: {
+        backgroundColor: "#000",
+        padding: 12,
+        borderRadius: 10,
+        alignItems: "center"
+    },
+    buttonText: {
+        color: "#fff",
+        fontSize: 14
+    }
 });
