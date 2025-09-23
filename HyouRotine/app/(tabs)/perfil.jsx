@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, ImageBackground, StyleSheet, ScrollView } from "react-native";
+import BigButton from "../../components/BigButton";
 
 export default function ProfileScreen() {
   return (
@@ -21,9 +22,14 @@ export default function ProfileScreen() {
       {/* Lista de opções */}
       <View style={styles.menuContainer}>
         {["Editar Perfil", "Progresso", "Preferências", "Privacidade", "Sair"].map((item, index) => (
-          <TouchableOpacity key={index} style={styles.menuItem}>
-            <Text style={styles.menuText}>{item}</Text>
-          </TouchableOpacity>
+          <BigButton
+            key={index}
+            title={item}
+            onPress={() => console.log(`Pressionado: ${item}`)}
+            style={styles.menuItem}
+            textStyle={styles.menuText}
+            accessibilityHint={`Navegar para ${item}`}
+          />
         ))}
       </View>
     </ScrollView>

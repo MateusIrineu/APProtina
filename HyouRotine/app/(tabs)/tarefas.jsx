@@ -1,9 +1,10 @@
-import { View, Text, TextInput, Pressable, StyleSheet, Alert, FlatList, ImageBackground } from "react-native";
+import { View, TextInput, StyleSheet, Alert, FlatList, ImageBackground } from "react-native";
 // Componente de seleção em lista suspensa (dropdown), usado para escolher opções como categorias ou filtros 
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { BlurView } from "expo-blur"; // usado para dar um desfoque no card
 import Task from "../../components/Task";
+import BigButton from "../../components/BigButton";
 
 const initialTasks = [];
 
@@ -81,9 +82,13 @@ export default function ListaDeTarefas() {
                         value={time}
                     />
 
-                    <Pressable onPress={addTask} style={style.button}>
-                        <Text style={style.buttonText}>Adicionar</Text>
-                    </Pressable>
+                    <BigButton
+                        title="Adicionar"
+                        onPress={addTask}
+                        style={style.button}
+                        textStyle={style.buttonText}
+                        accessibilityHint="Adiciona uma nova tarefa à lista"
+                    />
                 </View>
 
                 {/* Lista */}

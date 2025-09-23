@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Button, FlatList, ImageBackground, Pressable } from 'react-native';
+import { View, StyleSheet, FlatList, ImageBackground } from 'react-native';
 import { useState } from "react";
 import Task from "../../components/Task";
+import BigButton from "../../components/BigButton";
 
 const initialTasks = [
     { id: 1, completed: true, text: "Estudar React Native" },
@@ -36,15 +37,27 @@ export default function Filtro() {
             style={styles.container}
         >
             <View style={styles.botoes}>
-                <Pressable style={styles.botao} onPress={() => setFiltro('todas')}>
-                    <Text style={styles.botaoTexto}>Todas</Text>
-                </Pressable>
-                <Pressable style={styles.botao} onPress={() => setFiltro('concluidas')}>
-                    <Text style={styles.botaoTexto}>Concluídas</Text>
-                </Pressable>
-                <Pressable style={styles.botao} onPress={() => setFiltro('pendentes')}>
-                    <Text style={styles.botaoTexto}>Pendentes</Text>
-                </Pressable>
+                <BigButton 
+                    title="Todas"
+                    onPress={() => setFiltro('todas')}
+                    style={[styles.botao, filtro === 'todas' && styles.botaoAtivo]}
+                    textStyle={[styles.botaoTexto, filtro === 'todas' && styles.botaoTextoAtivo]}
+                    accessibilityHint="Mostrar todas as tarefas"
+                />
+                <BigButton 
+                    title="Concluídas"
+                    onPress={() => setFiltro('concluidas')}
+                    style={[styles.botao, filtro === 'concluidas' && styles.botaoAtivo]}
+                    textStyle={[styles.botaoTexto, filtro === 'concluidas' && styles.botaoTextoAtivo]}
+                    accessibilityHint="Mostrar apenas tarefas concluídas"
+                />
+                <BigButton 
+                    title="Pendentes"
+                    onPress={() => setFiltro('pendentes')}
+                    style={[styles.botao, filtro === 'pendentes' && styles.botaoAtivo]}
+                    textStyle={[styles.botaoTexto, filtro === 'pendentes' && styles.botaoTextoAtivo]}
+                    accessibilityHint="Mostrar apenas tarefas pendentes"
+                />
             </View>
 
             <FlatList
@@ -82,9 +95,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         borderRadius: 8
     },
+    botaoAtivo: {
+        backgroundColor: '#DC385A',
+    },
     botaoTexto: {
         color: '#fff',
         fontSize: 14,
         fontWeight: 'bold'
+    },
+    botaoTextoAtivo: {
+        color: '#fff',
+        fontWeight: '800',
     }
 });
