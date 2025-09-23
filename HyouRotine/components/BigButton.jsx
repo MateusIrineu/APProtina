@@ -27,11 +27,11 @@ export default function BigButton({
     const padding = bigTargets ? 20 : 12;
     
     const buttonStyle = [
+        style,
         {
             paddingVertical: padding,
             paddingHorizontal: padding + 4,
-        },
-        style
+        }
     ];
 
     return(

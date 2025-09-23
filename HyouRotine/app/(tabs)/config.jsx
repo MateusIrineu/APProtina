@@ -1,14 +1,12 @@
-
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import BigButton from "../../components/BigButton"
 import { makeSettingsStyles } from "../../styles/settingsStyles";
 import { light } from "../../styles/theme";
+import { useBigTargets } from "../../components/BigTargetsContext";
 
 export default function SettingsScreen() {
-  // Estado local simples
-  const [bigTargets, setBigTargets] = useState(false);
-  
+  const { bigTargets, setBigTargets } = useBigTargets();
   const theme = light;
   // Gera estilos baseados nas configurações atuais
   const styles = makeSettingsStyles({ theme, bigTargets });

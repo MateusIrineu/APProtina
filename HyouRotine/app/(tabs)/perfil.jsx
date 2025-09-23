@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, Image, ImageBackground, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
+import { useState } from "react";
 import BigButton from "../../components/BigButton";
 
 export default function ProfileScreen() {
@@ -7,7 +15,9 @@ export default function ProfileScreen() {
     <ScrollView style={{ flex: 1, backgroundColor: "#DC385A" }}>
       {/* Parte de cima com imagem de fundo */}
       <ImageBackground
-        source={{ uri: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" }} // imagem de fundo
+        source={{
+          uri: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
+        }} // imagem de fundo
         style={styles.header}
       >
         <View style={styles.profileImageWrapper}>
@@ -21,7 +31,13 @@ export default function ProfileScreen() {
 
       {/* Lista de opções */}
       <View style={styles.menuContainer}>
-        {["Editar Perfil", "Progresso", "Preferências", "Privacidade", "Sair"].map((item, index) => (
+        {[
+          "Editar Perfil",
+          "Progresso",
+          "Preferências",
+          "Privacidade",
+          "Sair",
+        ].map((item, index) => (
           <BigButton
             key={index}
             title={item}
