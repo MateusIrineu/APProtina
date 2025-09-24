@@ -1,3 +1,4 @@
+
 import { View, StyleSheet, FlatList, ImageBackground } from "react-native";
 import { useState } from "react";
 import Task from "../../components/Task";
@@ -31,6 +32,7 @@ export default function Filtro() {
     if (filtro === "concluidas") return task.completed;
     if (filtro === "pendentes") return !task.completed;
   });
+
 
   return (
     <ImageBackground

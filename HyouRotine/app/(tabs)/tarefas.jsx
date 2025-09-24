@@ -1,3 +1,4 @@
+
 import {
   View,
   TextInput,
@@ -9,7 +10,7 @@ import {
 // Componente de seleção em lista suspensa (dropdown), usado para escolher opções como categorias ou filtros
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-import { BlurView } from "expo-blur"; // usado para dar um desfoque no card
+import { BlurView } from "expo-blur";
 import Task from "../../components/Task";
 import BigButton from "../../components/BigButton";
 import { useBigTargets } from "../../components/BigTargetsContext";
