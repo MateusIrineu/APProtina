@@ -64,6 +64,15 @@ export default function TabsLayout() {
             ),
           }}
         />
+        <Tabs.Screen
+          name="config"
+          options={{
+            title: "Config",
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="settings" size={size} color={color} />
+            ),
+          }}
+        />
       </Tabs>
     </GestureHandlerRootView>
   );

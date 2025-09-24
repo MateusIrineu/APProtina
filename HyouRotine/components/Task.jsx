@@ -1,6 +1,7 @@
-import { View, Text, Pressable, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
+import BigButton from "./BigButton";
 
 export default function Task({ text, completed, onToggle, onDelete, category, time }) {
     const confirmDelete = () => {
@@ -15,10 +16,15 @@ export default function Task({ text, completed, onToggle, onDelete, category, ti
     };
 
     const renderRightActions = () => (
-        <Pressable onPress={confirmDelete} style={styles.deleteSwipeBtn}>
+        <BigButton
+            title=""
+            onPress={confirmDelete}
+            style={styles.deleteSwipeBtn}
+            accessibilityLabel="Excluir tarefa"
+            accessibilityHint={`Exclui a tarefa ${text}`}
+        >
             <Ionicons name="trash" size={24} color="#fff" />
-           
-        </Pressable>
+        </BigButton>
     );
 
     const categoryIcons = {
@@ -50,7 +56,12 @@ export default function Task({ text, completed, onToggle, onDelete, category, ti
 
                 {/* Rodapé */}
                 <View style={styles.footer}>
-                    <Pressable onPress={onToggle} style={styles.circleBtn}>
+                    <BigButton
+                        onPress={onToggle}
+                        style={styles.circleBtn}
+                        accessibilityLabel={completed ? "Marcar como pendente" : "Marcar como concluída"}
+                        accessibilityHint={`Alterna o status da tarefa ${text}`}
+                    >
                         <Ionicons
                             name={completed ? "checkmark-circle" : "ellipse-outline"}
                             size={24}
@@ -59,7 +70,7 @@ export default function Task({ text, completed, onToggle, onDelete, category, ti
                         <Text style={[styles.footerText, completed && { color: "#DC385A" }]}>
                             Concluir
                         </Text>
-                    </Pressable>
+                    </BigButton>
 
                     <Text style={styles.timeText}>{time}</Text>
                 </View>
