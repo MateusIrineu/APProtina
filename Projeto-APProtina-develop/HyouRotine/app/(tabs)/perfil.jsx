@@ -30,10 +30,6 @@ export default function ProfileScreen() {
           />
         </View>
         <Text style={[styles.name, { fontSize }]}>Yoshiko Namika</Text>
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Button title="A+" onPress={() => setFontSize(24)} />
-          <Button title="A-" onPress={() => setFontSize(16)} />
-        </View>
       </ImageBackground>
 
       {/* Lista de opções */}
