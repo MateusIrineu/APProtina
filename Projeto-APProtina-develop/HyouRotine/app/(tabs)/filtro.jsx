@@ -128,11 +128,11 @@ const styles = StyleSheet.create({
   botaoAtivo: {
     backgroundColor: "#000",  // apenas o botão ativo muda visualmente
     borderWidth: 2,
-    borderColor: "#DC385A", // destaque do botão ativo
+    borderColor: "#DC385A",
   },
   botaoTexto: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "bold",
   },
   botaoTextoAtivo: {

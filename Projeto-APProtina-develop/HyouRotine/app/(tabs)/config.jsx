@@ -1,46 +1,123 @@
-import React, { useState } from "react";
-import { View, Text, Button } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, ImageBackground, ScrollView } from "react-native";
 import BigButton from "../../components/BigButton";
-import { makeSettingsStyles } from "../../styles/settingsStyles";
-import { light } from "../../styles/theme";
 import { useBigTargets } from "../../components/BigTargetsContext";
-import { useFontSize } from "../../components/FonteSizeContext"; 
+import { useFontSize } from "../../components/FonteSizeContext";
 
 export default function SettingsScreen() {
   const { bigTargets, setBigTargets } = useBigTargets();
-  const { fontSize, setFontSize } = useFontSize(); 
-  const theme = light;
-  const styles = makeSettingsStyles({ theme, bigTargets });
+  const { fontSize, setFontSize } = useFontSize();
 
   return (
-    <View style={{ gap: 16 }}>
-      <View style={styles.group} accessible accessibilityLabel="Grupo de tamanho de fonte">
-        <Text style={[styles.groupTitle, { fontSize }]}>Acessibilidade visual</Text>
-        <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Button title="A+" onPress={() => setFontSize(24)} />
-          <Button title="A-" onPress={() => setFontSize(16)} />
+    <ImageBackground
+      source={require("../../assets/image/imagemFundo.png")}
+      style={styles.background}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* ---------------- FONT SIZE ---------------- */}
+        <View style={styles.card} accessible accessibilityLabel="Grupo de tamanho de fonte">
+          <Text style={[styles.cardTitle, { fontSize }]}>Acessibilidade visual</Text>
+          <View style={styles.row}>
+            <BigButton
+              title="A+"
+              onPress={() => setFontSize(24)}
+              style={styles.buttonSmall}
+              textStyle={[styles.buttonText, { fontSize }]}
+            />
+            <BigButton
+              title="A-"
+              onPress={() => setFontSize(16)}
+              style={styles.buttonSmall}
+              textStyle={[styles.buttonText, { fontSize }]}
+            />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.group} accessible accessibilityLabel="Grupo de alvos de toque">
-        <Text style={[styles.groupTitle, { fontSize }]}>Acessibilidade tátil</Text>
-        <View style={styles.row}>
-          <Text style={[styles.label, { fontSize }]}>Alvos de toque grandes</Text>
-          <BigButton
-            title={bigTargets ? "Ativado" : "Desativado"}
-            onPress={() => setBigTargets((v) => !v)}
-            role="switch"
-            style={[
-              styles.switchBtn,
-              bigTargets ? styles.switchOn : styles.switchOff,
-            ]}
-            textStyle={[styles.switchText, { fontSize }]}
-            bigTargets={bigTargets}
-            accessibilityState={{ checked: bigTargets }}
-            accessibilityHint="Aumenta áreas de toque e espaçamentos."
-          />
+        {/* ---------------- BIG TARGETS ---------------- */}
+        <View style={styles.card} accessible accessibilityLabel="Grupo de alvos de toque">
+          <Text style={[styles.cardTitle, { fontSize }]}>Acessibilidade tátil</Text>
+          <View style={styles.row}>
+            <Text style={[styles.label, { fontSize }]}>Alvos de toque grandes</Text>
+            <BigButton
+              title={bigTargets ? "Ativado" : "Desativado"}
+              onPress={() => setBigTargets((v) => !v)}
+              style={[styles.switchBtn, bigTargets ? styles.switchOn : styles.switchOff]}
+              textStyle={[styles.switchText, { fontSize }]}
+              bigTargets={bigTargets}
+              accessibilityState={{ checked: bigTargets }}
+              accessibilityHint="Aumenta áreas de toque e espaçamentos."
+            />
+          </View>
         </View>
-      </View>
-    </View>
+      </ScrollView>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    padding: 16,       // padding interno consistente
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  card: {
+    width: "100%",
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 20,    // espaçamento entre cards
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardTitle: {
+    fontWeight: "bold",
+    marginBottom: 12,
+    color: "#333",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+  label: {
+    color: "#333",
+    flex: 1,
+  },
+  buttonSmall: {
+    flex: 1,
+    marginHorizontal: 5,
+    backgroundColor: "#000",
+    borderRadius: 10,
+    paddingVertical: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  switchBtn: {
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  switchOn: {
+    backgroundColor: "#DC385A",
+  },
+  switchOff: {
+    backgroundColor: "#000",
+  },
+  switchText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
