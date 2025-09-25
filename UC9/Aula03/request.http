@@ -1,0 +1,15 @@
+### GET - Listar produto
+GET http://localhost:3000/produtos
+Content-Type: application/json
+###
+
+### POST - Adicionar produto
+POST http://localhost:3000/produtos
+Content-Type: application/json
+
+{
+  "id": "1",
+  "nome": "café",
+  "preco": 100.00
+}
+###
