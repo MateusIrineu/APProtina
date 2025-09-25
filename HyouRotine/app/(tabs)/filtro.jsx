@@ -3,7 +3,7 @@ import { useState } from "react";
 import Task from "../../components/Task";
 import BigButton from "../../components/BigButton";
 import { useBigTargets } from "../../components/BigTargetsContext";
-import { useFontSize } from "../components/FontSizeContext"; 
+import { useFontSize } from "../../components/FonteSizeContext"; 
 
 const initialTasks = [
   { id: 1, completed: true, text: "Estudar React Native" },

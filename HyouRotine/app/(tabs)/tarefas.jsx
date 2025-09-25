@@ -14,7 +14,7 @@ import { BlurView } from "expo-blur";
 import Task from "../../components/Task";
 import BigButton from "../../components/BigButton";
 import { useBigTargets } from "../../components/BigTargetsContext";
-import { useFontSize } from "../components/FontSizeContext";
+import { useFontSize } from "../../components/FonteSizeContext";
 
 const initialTasks = [];
 
