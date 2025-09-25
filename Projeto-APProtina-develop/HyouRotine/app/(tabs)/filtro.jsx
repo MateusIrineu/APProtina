@@ -4,7 +4,7 @@ import Task from "../../components/Task";
 import BigButton from "../../components/BigButton";
 import { useBigTargets } from "../../components/BigTargetsContext";
 import { useFontSize } from "../../components/FonteSizeContext";
-import { useTarefasStore } from "../../store/tasksStore"; // store que faz ponte com AsyncStorage
+import { useTarefasStore } from "../../store/tasksStore"; // 👈 store que faz ponte com AsyncStorage
 
 export default function Filtro() {
   // Contextos de UI
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   botaoAtivo: {
     backgroundColor: "#000",  // apenas o botão ativo muda visualmente
     borderWidth: 2,
-    borderColor: "#DC385A", // borda rosa para destacar o ativo
+    borderColor: "#DC385A", // destaque do botão ativo
   },
   botaoTexto: {
     color: "#fff",
