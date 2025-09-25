@@ -14,6 +14,7 @@ import { BlurView } from "expo-blur";
 import Task from "../../components/Task";
 import BigButton from "../../components/BigButton";
 import { useBigTargets } from "../../components/BigTargetsContext";
+import { useFontSize } from "../components/FontSizeContext";
 
 const initialTasks = [];
 
@@ -23,6 +24,7 @@ export default function ListaDeTarefas() {
   const [category, setCategory] = useState("Alimentação");
   const [time, setTime] = useState("");
   const { bigTargets } = useBigTargets();
+  const { fontSize } = useFontSize();
 
   const remover = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -67,7 +69,7 @@ export default function ListaDeTarefas() {
         {/* Formulário */}
         <View style={style.cardContainer}>
           <TextInput
-            style={style.input}
+            style={[style.input, { fontSize }]}
             placeholder="Digite a tarefa"
             placeholderTextColor="#999"
             onChangeText={setNewTask}
@@ -77,7 +79,7 @@ export default function ListaDeTarefas() {
           <Picker
             selectedValue={category}
             onValueChange={(itemValue) => setCategory(itemValue)}
-            style={style.picker}
+            style={[style.picker, { fontSize }]}
           >
             <Picker.Item label="Alimentação" value="Alimentação" />
             <Picker.Item label="Lazer" value="Lazer" />
@@ -87,7 +89,7 @@ export default function ListaDeTarefas() {
           </Picker>
 
           <TextInput
-            style={style.input}
+            style={[style.input, { fontSize }]}
             placeholder="Horário (ex: 22:00 às 22:30)"
             placeholderTextColor="#999"
             onChangeText={setTime}
@@ -98,7 +100,7 @@ export default function ListaDeTarefas() {
             title="Adicionar"
             onPress={addTask}
             style={style.button}
-            textStyle={style.buttonText}
+            textStyle={[style.buttonText, { fontSize }]}
             accessibilityHint="Adiciona uma nova tarefa à lista"
             bigTargets={bigTargets}
           />

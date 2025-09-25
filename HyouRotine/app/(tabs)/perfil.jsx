@@ -6,27 +6,34 @@ import {
   ImageBackground,
   StyleSheet,
   ScrollView,
+  Button, 
 } from "react-native";
 import { useState } from "react";
 import BigButton from "../../components/BigButton";
+import { useFontSize } from "../components/FontSizeContext"; 
 
 export default function ProfileScreen() {
+  const { fontSize, setFontSize } = useFontSize(); 
+
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#DC385A" }}>
-      {/* Parte de cima com imagem de fundo */}
       <ImageBackground
         source={{
           uri: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
-        }} // imagem de fundo
+        }}
         style={styles.header}
       >
         <View style={styles.profileImageWrapper}>
           <Image
-            source={{ uri: "https://randomuser.me/api/portraits/women/44.jpg" }} // foto do perfil
+            source={{ uri: "https://randomuser.me/api/portraits/women/44.jpg" }}
             style={styles.profileImage}
           />
         </View>
-        <Text style={styles.name}>Yoshiko Namika</Text>
+        <Text style={[styles.name, { fontSize }]}>Yoshiko Namika</Text>
+        <View style={{ flexDirection: "row", marginTop: 10 }}>
+          <Button title="A+" onPress={() => setFontSize("24px")} />
+          <Button title="A-" onPress={() => setFontSize("16px")} />
+        </View>
       </ImageBackground>
 
       {/* Lista de opções */}
@@ -43,7 +50,7 @@ export default function ProfileScreen() {
             title={item}
             onPress={() => console.log(`Pressionado: ${item}`)}
             style={styles.menuItem}
-            textStyle={styles.menuText}
+            textStyle={[styles.menuText, { fontSize }]} 
             accessibilityHint={`Navegar para ${item}`}
           />
         ))}

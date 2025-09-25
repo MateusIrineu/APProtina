@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet } from "react-native";
 
+
 export default function TabsLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

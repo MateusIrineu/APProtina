@@ -1,9 +1,10 @@
-
 import { View, StyleSheet, FlatList, ImageBackground } from "react-native";
 import { useState } from "react";
 import Task from "../../components/Task";
 import BigButton from "../../components/BigButton";
 import { useBigTargets } from "../../components/BigTargetsContext";
+import { useFontSize } from "../components/FontSizeContext"; 
+
 const initialTasks = [
   { id: 1, completed: true, text: "Estudar React Native" },
   { id: 2, completed: false, text: "Fazer exercícios" },
@@ -14,6 +15,7 @@ export default function Filtro() {
   const [filtro, setFiltro] = useState("todas");
   const [tasks, setTasks] = useState(initialTasks);
   const { bigTargets } = useBigTargets();
+  const { fontSize } = useFontSize(); 
 
   const remover = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -33,7 +35,6 @@ export default function Filtro() {
     if (filtro === "pendentes") return !task.completed;
   });
 
-
   return (
     <ImageBackground
       source={require("../../assets/image/imagemFundo.png")}
@@ -47,9 +48,10 @@ export default function Filtro() {
           textStyle={[
             styles.botaoTexto,
             filtro === "todas" && styles.botaoTextoAtivo,
+            { fontSize }, 
           ]}
           accessibilityHint="Mostrar todas as tarefas"
-          bigTargets={bigTargets} // <-- adicione aqui
+          bigTargets={bigTargets}
         />
         <BigButton
           title="Concluídas"
@@ -58,9 +60,10 @@ export default function Filtro() {
           textStyle={[
             styles.botaoTexto,
             filtro === "concluidas" && styles.botaoTextoAtivo,
+            { fontSize }, 
           ]}
           accessibilityHint="Mostrar apenas tarefas concluídas"
-          bigTargets={bigTargets} // <-- adicione aqui
+          bigTargets={bigTargets}
         />
         <BigButton
           bigTargets={bigTargets}
@@ -70,6 +73,7 @@ export default function Filtro() {
           textStyle={[
             styles.botaoTexto,
             filtro === "pendentes" && styles.botaoTextoAtivo,
+            { fontSize }, 
           ]}
           accessibilityHint="Mostrar apenas tarefas pendentes"
         />
