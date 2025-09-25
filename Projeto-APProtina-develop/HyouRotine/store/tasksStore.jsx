@@ -27,32 +27,32 @@ async function saveTasks(tasks) {
 
 /* ---------------------- Zustand Store ---------------------- */
 export const useTarefasStore = create((set, get) => ({
-  // 📌 Estado inicial
+  // Estado inicial
   tasks: [],
   filtro: "todas", 
   carregando: true,
 
-  //  Carregar tarefas
+  // Carregar tarefas
   carregarTarefas: async () => {
     const tasks = await loadTasks();
     set({ tasks, carregando: false });
   },
 
-  //  Adicionar
+  // Adicionar
   adicionarTarefa: async (task) => {
     const novaLista = [...get().tasks, task];
     set({ tasks: novaLista });
     await saveTasks(novaLista);
   },
 
-  //  Remover
+  // Remover
   removerTarefa: async (id) => {
     const novaLista = get().tasks.filter((task) => task.id !== id);
     set({ tasks: novaLista });
     await saveTasks(novaLista);
   },
 
-  //  Toggle completed
+  // Toggle completed
   toggleCompleted: async (id) => {
     const novaLista = get().tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
@@ -61,10 +61,10 @@ export const useTarefasStore = create((set, get) => ({
     await saveTasks(novaLista);
   },
 
-  //  Definir filtro ativo
+  // Definir filtro ativo
   setFiltro: (filtro) => set({ filtro }),
 
-  //  Filtragem por texto (opcional, se quiser usar depois)
+  // Filtragem por texto (opcional, se quiser usar depois)
   tarefasFiltradas: () => {
     const { filtro, tasks } = get();
     return filtro
