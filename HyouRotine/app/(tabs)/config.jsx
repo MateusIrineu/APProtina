@@ -4,7 +4,7 @@ import BigButton from "../../components/BigButton";
 import { makeSettingsStyles } from "../../styles/settingsStyles";
 import { light } from "../../styles/theme";
 import { useBigTargets } from "../../components/BigTargetsContext";
-import { useFontSize } from "../components/FontSizeContext"; 
+import { useFontSize } from "../../components/FonteSizeContext"; 
 
 export default function SettingsScreen() {
   const { bigTargets, setBigTargets } = useBigTargets();
@@ -17,8 +17,8 @@ export default function SettingsScreen() {
       <View style={styles.group} accessible accessibilityLabel="Grupo de tamanho de fonte">
         <Text style={[styles.groupTitle, { fontSize }]}>Acessibilidade visual</Text>
         <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Button title="A+" onPress={() => setFontSize("24")} />
-          <Button title="A-" onPress={() => setFontSize("16")} />
+          <Button title="A+" onPress={() => setFontSize(24)} />
+          <Button title="A-" onPress={() => setFontSize(16)} />
         </View>
       </View>
 

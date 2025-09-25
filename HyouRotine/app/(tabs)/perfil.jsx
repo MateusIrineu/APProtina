@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import BigButton from "../../components/BigButton";
-import { useFontSize } from "../components/FontSizeContext"; 
+import { useFontSize } from "../../components/FonteSizeContext"; 
 
 export default function ProfileScreen() {
   const { fontSize, setFontSize } = useFontSize(); 
@@ -31,8 +31,8 @@ export default function ProfileScreen() {
         </View>
         <Text style={[styles.name, { fontSize }]}>Yoshiko Namika</Text>
         <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Button title="A+" onPress={() => setFontSize("24")} />
-          <Button title="A-" onPress={() => setFontSize("16")} />
+          <Button title="A+" onPress={() => setFontSize(24)} />
+          <Button title="A-" onPress={() => setFontSize(16)} />
         </View>
       </ImageBackground>
 

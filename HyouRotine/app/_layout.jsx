@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
 import { BigTargetsProvider } from "../components/BigTargetsContext";
-import { FontSizeProvider } from "./components/FontSizeContext";
+import { FontSizeProvider } from "../components/FonteSizeContext";
 
 export default function RootLayout() {
   return (
